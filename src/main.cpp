@@ -2,13 +2,17 @@
 #include "imageloader.h"
 #include "imagewritter.h"
 #include <iostream>
-int main(void)
+int main(int argc, char **argv)
 {
-    ImageLoader *loader = new BitmapImageLoader();
-    //BitmapImageLoader  loader;
-    BitmapImageWritter writter;
-    ImagePtr image = loader->read("pic/test2.bmp");
-    writter.write("pic/copy.bmp", image);
+    if(argc != 3)
+        std::cerr << "Usage ./program input.bmp output.bmp" << std::endl;
+    else
+    {
+        ImageLoader *loader = new BitmapImageLoader;
+        ImageWritter *writter = new BitmapImageWritter;
+        ImagePtr image = loader->read(argv[1]);
+        writter->write(argv[2], image);        
+    }
     return 0;
 }
 

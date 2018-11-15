@@ -8,7 +8,7 @@ class ImageWritter
 public:
     virtual bool write(std::string filename, ImagePtr image) const = 0;
 };
-class BitmapImageWritter
+class BitmapImageWritter : public ImageWritter
 {
 public:
     bool write(std::string filename, ImagePtr bitmap) const;
