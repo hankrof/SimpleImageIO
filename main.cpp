@@ -4,9 +4,10 @@
 #include <iostream>
 int main(void)
 {
-    BitmapImageLoader  loader;
+    ImageLoader *loader = new BitmapImageLoader();
+    //BitmapImageLoader  loader;
     BitmapImageWritter writter;
-    ImagePtr image = loader.read("pic/test4.bmp");
+    ImagePtr image = loader->read("pic/test2.bmp");
     writter.write("pic/copy.bmp", image);
     return 0;
 }

@@ -22,9 +22,11 @@ public:
     int  height() const;
     int& height();
     virtual void resize(int width, int height) = 0;
-    virtual uint32_t widthBytes() const = 0;
-    virtual uint32_t widthBytes(int width) const = 0;
+    virtual uint32_t pixelsLength() const = 0;
+    virtual uint32_t pixelsLength(int width, int height) const = 0;
     virtual Color at(int x,int y) const = 0;
+    virtual uint8_t* data() = 0;
+    virtual const uint8_t* data() const = 0;
 protected:
     int _width, _height;
 };

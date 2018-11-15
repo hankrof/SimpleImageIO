@@ -9,11 +9,16 @@ public:
     BitmapImage(int width, int height, uint8_t *pixels);
     ~BitmapImage();
     void resize(int width, int height);
+    uint32_t pixelsLength() const;
+    uint32_t pixelsLength(int width, int height) const;
+    Color at(int x,int y) const;
+    uint8_t* data();
+    const uint8_t* data() const;
+private:
     uint32_t widthBytes() const;
     uint32_t widthBytes(int width) const;
-    Color at(int x,int y) const;
-private:
     uint32_t _widthBytes;
     uint8_t* _pixels;
+    uint32_t _pixelsLength;
 };
 #endif

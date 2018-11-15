@@ -21,7 +21,7 @@ ImagePtr BitmapImageLoader::read(const std::string filename) const
             throw std::logic_error("Data Offset before pixels in Bitmap Header"
                                    " is not equal to Bitmap Header");
         if(header.size - sizeof(header) != 
-            BitmapImage().widthBytes(header.width) * header.height)
+            BitmapImage().pixelsLength(header.width, header.height))
             throw std::logic_error("Size image is not valid");
 
         if(header.bpp / 8 != 3)

@@ -11,17 +11,7 @@ bool BitmapImageWritter::write(std::string filename, ImagePtr bitmap) const
             throw std::logic_error(std::string("Could not write file to [") + filename + "]");
         BitmapHeader header = makeHeader(bitmap);
         file.write(reinterpret_cast<char*>(&header), sizeof(BitmapHeader));
-        for(int x = 0; x < bitmap->width(); x++)
-        {
-            for(int y = 0; y < bitmap->height(); y++)
-            {
-                Color c = bitmap->at(x, bitmap->height() - 1 - y);
-                file.write(reinterpret_cast<char*>(&c.b), 1);
-                file.write(reinterpret_cast<char*>(&c.g), 1);
-                file.write(reinterpret_cast<char*>(&c.r), 1);
-            }
-        }
-        file.flush();
+        file.write(reinterpret_cast<char*>(bitmap->data()), bitmap->pixelsLength());
     }
     catch(const std::exception &e)
     {
@@ -36,7 +26,7 @@ BitmapHeader BitmapImageWritter::makeHeader(const ImagePtr bitmap) const
     BitmapHeader header;
     header.type[0]          = 'B';
     header.type[1]          = 'M';
-    header.size             = bitmap->widthBytes() * bitmap->height() + sizeof(BitmapHeader);
+    header.size             = bitmap->pixelsLength() + sizeof(BitmapHeader);
     header.reserved1        = 0;
     header.reserved2        = 0;
     header.bitmapDataOffset = sizeof(BitmapHeader);
@@ -46,7 +36,7 @@ BitmapHeader BitmapImageWritter::makeHeader(const ImagePtr bitmap) const
     header.plane            = 1;
     header.bpp              = 24;
     header.compression      = 0;
-    header.sizeImage        = bitmap->widthBytes() * bitmap->height();
+    header.sizeImage        = header.size - sizeof(BitmapHeader);
     header.hResolution      = 0;
     header.vResolution      = 0;
     header.usedColors       = 0;
