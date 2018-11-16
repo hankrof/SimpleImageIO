@@ -71,16 +71,16 @@ uint32_t BitmapImage::pixelsLength(int width, int height) const
     return widthBytes(width) * height;
 }
 
-Color BitmapImage::at(int x,int y) const
+Vec3u BitmapImage::at(int x,int y) const
 {
     uint8_t* p = (_pixels + (_height - 1 - y) * _widthBytes + x * 3);
-    return Color(p[2] , p[1], p[0]);
+    return Vec3u(p[2] , p[1], p[0]);
 }
 
-Color& BitmapImage::at(int x,int y)
+Vec3u& BitmapImage::at(int x,int y)
 {
-    _refColor = reinterpret_cast<Color*>((_pixels + (_height - 1 - y) * _widthBytes + x * 3));
-    return *_refColor;
+    _refVec3u = reinterpret_cast<Vec3u*>((_pixels + (_height - 1 - y) * _widthBytes + x * 3));
+    return *_refVec3u;
 }
 
 uint8_t* BitmapImage::data()

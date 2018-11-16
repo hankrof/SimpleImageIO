@@ -1,5 +1,5 @@
 CPP = g++
-CPPFLAGS = -std=c++14 -g3 -Wall -Werror
+CPPFLAGS = -std=c++14 -g3 -Wall #-Werror
 OBJ = ../obj
 BIN = ../bin
 ${BIN}/main: ${OBJ}/main.o ${OBJ}/image.o ${OBJ}/bitmap.o ${OBJ}/imageloader.o ${OBJ}/imagewritter.o ${OBJ}/yuv.o

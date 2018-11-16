@@ -7,7 +7,7 @@ YUV420Image::YUV420Image()
     _yPixelsLength(0) ,_uPixelsLength(0) ,
     _vPixelsLength(0)
 {
-    
+
 }
 
 YUV420Image::YUV420Image(int width, int height)
@@ -34,11 +34,7 @@ void YUV420Image::resize(int width, int height)
         delete[] _pixels;
         _width  = width;
         _height = height;
-        _pixelsLength = pixelsLength(width, height);
-        _pixels = new uint8_t[_pixelsLength];
-        _yPixels = _pixels;
-        _uPixels = _pixels + _width * height;
-        _vPixels = _uPixels + static_cast<size_t>((_width * height * 1.0 / 4.0));
+        determinePosAndStrides();
     }
     catch(const std::exception &e)
     {
@@ -58,22 +54,22 @@ uint32_t YUV420Image::pixelsLength(int width, int height) const
     return (width * height) * 3.0 / 2.0;
 }
 
-Color YUV420Image::at(int x,int y) const
+Vec3u YUV420Image::at(int x,int y) const
 {
-    //Y only currently.
-    Color c;
-    c.b = c.g = c.r = *(_yPixels + y * _width + x);
+    Vec3u c;
+    c[0] = *(_yPixels + y * _widthBytes[0] + x);
+    c[1] = *(_uPixels + (y >> 1) * _widthBytes[1] + (x >> 1));
+    c[2] = *(_vPixels + (y >> 1) * _widthBytes[2] + (x >> 1));
     return c;
 }
 
-Color& YUV420Image::at(int x,int y)
+Vec3u& YUV420Image::at(int x,int y)
 {
-    _intermediateRefPixels[0] = (_yPixels + y * _width + x); 
-    _intermediateRefPixels[1] = (_yPixels + y * _width + x); 
-    _intermediateRefPixels[2] = (_yPixels + y * _width + x); 
-    return *(_refColor = reinterpret_cast<Color*>(*_intermediateRefPixels));
+    _intermediateRefPixels[0] = (_yPixels + y * _widthBytes[0] + x);
+    _intermediateRefPixels[1] = (_uPixels + (y >> 1) * _widthBytes[1] + (x >> 1));
+    _intermediateRefPixels[2] = (_vPixels + (y >> 1) * _widthBytes[2] + (x >> 1));
+    return *(_refVec3u = reinterpret_cast<Vec3u*>(*_intermediateRefPixels));
 }
-
 
 uint8_t* YUV420Image::data()
 {
@@ -88,6 +84,7 @@ const uint8_t* YUV420Image::data() const
 
 void YUV420Image::determinePosAndStrides()
 {
+    _pixelsLength  = pixelsLength(_width, _height);
     _yPixelsLength = _width * _height;
     _uPixelsLength = static_cast<size_t>((_width * _height * 1.0 / 4.0)); 
     _vPixelsLength = _uPixelsLength;

@@ -1,15 +1,25 @@
 #include "image.h"
-Color::Color()
-    : r(0), g(0), b(0)
+#include <memory.h>
+Vec3u::Vec3u()
 {
-
+    memset(v, 0, sizeof(v));
 }
 
-Color::Color(uint8_t r,uint8_t g, uint8_t b)
+Vec3u::Vec3u(uint8_t v1,uint8_t v2, uint8_t v3)
 {
-    this->r = r;
-    this->g = g;
-    this->b = b;
+    v[0] = v1;
+    v[1] = v2;
+    v[2] = v3;
+}
+
+uint8_t& Vec3u::operator[](int i)
+{
+    return v[i];
+}
+
+const uint8_t& Vec3u::operator[](int i) const
+{
+    return v[i];
 }
 
 Image::Image()

@@ -4,12 +4,14 @@
 #include <cassert>
 #include <exception>
 #include <memory>
-class Color
+class Vec3u
 {
 public:
-    Color();
-    Color(uint8_t r,uint8_t g, uint8_t b);
-    uint8_t r, g, b;
+    Vec3u();
+    Vec3u(uint8_t v1,uint8_t v2, uint8_t v3);
+    uint8_t& operator[](int i);
+    const uint8_t& operator[](int i) const;
+    uint8_t v[3];
 };
 class Image
 {
@@ -24,8 +26,8 @@ public:
     virtual void resize(int width, int height) = 0;
     virtual uint32_t pixelsLength() const = 0;
     virtual uint32_t pixelsLength(int width, int height) const = 0;
-    virtual Color  at(int x,int y) const = 0;
-    virtual Color& at(int x,int y) = 0;
+    virtual Vec3u  at(int x,int y) const = 0;
+    virtual Vec3u& at(int x,int y) = 0;
     virtual uint8_t* data() = 0;
     virtual const uint8_t* data() const = 0;
 protected:
