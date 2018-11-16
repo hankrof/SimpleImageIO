@@ -8,6 +8,7 @@ class ImageWritter
 public:
     virtual bool write(std::string filename, ImagePtr image) const = 0;
 };
+
 class BitmapImageWritter : public ImageWritter
 {
 public:
@@ -15,4 +16,5 @@ public:
 private:
     BitmapHeader makeHeader(const ImagePtr bitmap) const;
 };
+
 #endif

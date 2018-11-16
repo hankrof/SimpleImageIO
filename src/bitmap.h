@@ -12,6 +12,7 @@ public:
     uint32_t pixelsLength() const;
     uint32_t pixelsLength(int width, int height) const;
     Color at(int x,int y) const;
+    Color& at(int x,int y);
     uint8_t* data();
     const uint8_t* data() const;
 private:
@@ -20,5 +21,6 @@ private:
     uint32_t _widthBytes;
     uint8_t* _pixels;
     uint32_t _pixelsLength;
+    Color*   _refColor;
 };
 #endif

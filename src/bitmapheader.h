@@ -1,8 +1,9 @@
 #ifndef BITMAPHEADER_H
 #define BITMAPHEADER_H
 #include <stdint.h>
-struct BitmapHeader
+class BitmapHeader
 {
+public:
     char     type[2];
     uint32_t size; 
     uint16_t reserved1;

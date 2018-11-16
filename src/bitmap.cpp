@@ -77,6 +77,12 @@ Color BitmapImage::at(int x,int y) const
     return Color(p[2] , p[1], p[0]);
 }
 
+Color& BitmapImage::at(int x,int y)
+{
+    _refColor = reinterpret_cast<Color*>((_pixels + (_height - 1 - y) * _widthBytes + x * 3));
+    return *_refColor;
+}
+
 uint8_t* BitmapImage::data()
 {
     return _pixels;

@@ -12,6 +12,9 @@ bool BitmapImageWritter::write(std::string filename, ImagePtr bitmap) const
         BitmapHeader header = makeHeader(bitmap);
         file.write(reinterpret_cast<char*>(&header), sizeof(BitmapHeader));
         file.write(reinterpret_cast<char*>(bitmap->data()), bitmap->pixelsLength());
+        file.flush();
+        if(file.tellp() != header.size)
+            throw std::logic_error(std::string("Write to [") + filename + "] failed!");
     }
     catch(const std::exception &e)
     {
