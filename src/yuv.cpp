@@ -65,10 +65,12 @@ Vec3u YUV420Image::at(int x,int y) const
 
 Vec3u& YUV420Image::at(int x,int y)
 {
-    _intermediateRefPixels[0] = (_yPixels + y * _widthBytes[0] + x);
-    _intermediateRefPixels[1] = (_uPixels + (y >> 1) * _widthBytes[1] + (x >> 1));
-    _intermediateRefPixels[2] = (_vPixels + (y >> 1) * _widthBytes[2] + (x >> 1));
-    return *(_refVec3u = reinterpret_cast<Vec3u*>(*_intermediateRefPixels));
+    _refVec3u = Vec3uRef(
+                (_yPixels + y * _widthBytes[0] + x),
+                (_uPixels + (y >> 1) * _widthBytes[1] + (x >> 1)),
+                (_vPixels + (y >> 1) * _widthBytes[2] + (x >> 1))
+            );
+    return _refVec3u;
 }
 
 uint8_t* YUV420Image::data()

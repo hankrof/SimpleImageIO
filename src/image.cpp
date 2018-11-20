@@ -22,6 +22,33 @@ const uint8_t& Vec3u::operator[](int i) const
     return v[i];
 }
 
+Vec3uRef::Vec3uRef()
+    : Vec3u(), v{nullptr, nullptr, nullptr}
+{
+
+}
+
+Vec3uRef::Vec3uRef(uint8_t *v1, uint8_t *v2, uint8_t *v3)
+    : Vec3u(*v1, *v2, *v3), v{v1, v2, v3}
+{
+
+}
+
+Vec3u Vec3uRef::opeartor() const
+{
+    return Vec3u(*v[0], *v[1], *v[2]);
+}
+
+uint8_t& Vec3uRef::operator[](int i)
+{
+    return *v[i];
+}
+
+const uint8_t& Vec3uRef::operator[](int i) const
+{
+    return *v[i];
+}
+
 Image::Image()
     : _width(0), _height(0)
 {

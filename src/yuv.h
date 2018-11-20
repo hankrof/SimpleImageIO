@@ -16,18 +16,17 @@ public:
     uint8_t* data();
     const uint8_t* data() const; 
 private:
-    void      determinePosAndStrides();
-    Vec3u*   _refVec3u;
-    int      _widthBytes[3];
-    uint8_t* _intermediateRefPixels[3];
-    uint8_t* _pixels;
-    uint8_t* _yPixels;
-    uint8_t* _uPixels;
-    uint8_t* _vPixels;
-    uint32_t _pixelsLength;
-    uint32_t _yPixelsLength;
-    uint32_t _uPixelsLength;
-    uint32_t _vPixelsLength;
+    void       determinePosAndStrides();
+    Vec3uRef  _refVec3u;
+    int       _widthBytes[3];
+    uint8_t*  _pixels;
+    uint8_t*  _yPixels;
+    uint8_t*  _uPixels;
+    uint8_t*  _vPixels;
+    uint32_t  _pixelsLength;
+    uint32_t  _yPixelsLength;
+    uint32_t  _uPixelsLength;
+    uint32_t  _vPixelsLength;
 };
 
 #endif

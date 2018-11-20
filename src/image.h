@@ -11,7 +11,19 @@ public:
     Vec3u(uint8_t v1,uint8_t v2, uint8_t v3);
     uint8_t& operator[](int i);
     const uint8_t& operator[](int i) const;
+private:
     uint8_t v[3];
+};
+class Vec3uRef : public Vec3u
+{
+public:
+    Vec3uRef();
+    Vec3uRef(uint8_t *v1, uint8_t *v2, uint8_t *v3);
+    Vec3u opeartor() const;
+    uint8_t& operator[](int i);
+    const uint8_t& operator[](int i) const;
+private:
+    uint8_t* v[3];
 };
 class Image
 {
