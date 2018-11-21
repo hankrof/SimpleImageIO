@@ -4,6 +4,11 @@
 #include <cassert>
 #include <exception>
 #include <memory>
+
+class BitmapImage;
+class Image;
+typedef std::shared_ptr<Image> ImagePtr;
+
 class Vec3u
 {
 public:
@@ -14,6 +19,7 @@ public:
 private:
     uint8_t v[3];
 };
+
 class Vec3uRef : public Vec3u
 {
 public:
@@ -25,6 +31,7 @@ public:
 private:
     uint8_t* v[3];
 };
+
 class Image
 {
 public:
@@ -42,8 +49,8 @@ public:
     virtual Vec3u& at(int x,int y) = 0;
     virtual uint8_t* data() = 0;
     virtual const uint8_t* data() const = 0;
+    virtual ImagePtr toBitmap() const = 0;    
 protected:
     int _width, _height;
 };
-typedef std::shared_ptr<Image> ImagePtr;
 #endif

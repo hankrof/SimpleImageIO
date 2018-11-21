@@ -22,28 +22,15 @@ int main(int argc, char **argv)
         sscanf(argv[3], "%d", &frameNum);
         assert(width > 0);
         assert(height > 0);
-
         ImageLoader  *loader  = new YUV420ImageLoader;
         ImageWritter *writter = new BitmapImageWritter;
         loader->setLoadingSize(width, height);
         ImagePtr image;
-        ImagePtr bitmap(new BitmapImage(width, height));
         std::string filename = takeFilename(argv[1]);
         for(int i = 0; i < frameNum && !loader->eof(); i++)
         {
             image = loader->read(argv[1]);
-            for(int x = 0; x < image->width(); x++)
-                for(int y = 0; y < image->height(); y++)
-                {
-                    Vec3u c = image->at(x, y); 
-                    uint8_t &Y = c[0], &U = c[1], &V = c[2];
-                    uint8_t b, g, r;
-                    r = Y + 1.13983 * (V - 128);
-                    g = Y - 0.39465 * (U - 128) - 0.58060 * (V - 128);
-                    b = Y + 2.03211 * (U - 128);
-                    bitmap->at(x, y) = Vec3u(b, g, r);
-                }
-            writter->write(std::string(filename) + std::to_string(i) + ".bmp", bitmap);
+            writter->write(std::string(filename) + std::to_string(i) + ".bmp", image->toBitmap());
         }
     }
     return 0;

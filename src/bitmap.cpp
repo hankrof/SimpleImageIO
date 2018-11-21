@@ -92,3 +92,8 @@ const uint8_t* BitmapImage::data() const
 {
     return _pixels;
 }
+
+ImagePtr BitmapImage::toBitmap() const
+{
+    return ImagePtr(new BitmapImage(*this));
+}

@@ -15,6 +15,7 @@ public:
     Vec3u& at(int x,int y);
     uint8_t* data();
     const uint8_t* data() const;
+    ImagePtr toBitmap() const;
 private:
     uint32_t widthBytes() const;
     uint32_t widthBytes(int width) const;
