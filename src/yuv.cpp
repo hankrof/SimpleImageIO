@@ -52,10 +52,10 @@ uint32_t YUV420Image::pixelsLength() const
 
 uint32_t YUV420Image::pixelsLength(int width, int height) const
 {
-    return (width * height) * 3.0 / 2.0;
+    return (width * height) * 1.5;
 }
 
-Vec3u YUV420Image::at(int x,int y) const
+inline Vec3u YUV420Image::at(int x,int y) const
 {
     Vec3u c;
     c[0] = *(_yPixels + y * _widthBytes[0] + x);
@@ -64,7 +64,7 @@ Vec3u YUV420Image::at(int x,int y) const
     return c;
 }
 
-Vec3u& YUV420Image::at(int x,int y)
+inline Vec3u& YUV420Image::at(int x,int y)
 {
     _refVec3u = Vec3uRef(
                 (_yPixels + y * _widthBytes[0] + x),
@@ -88,7 +88,7 @@ void YUV420Image::determinePosAndStrides()
 {
     _pixelsLength  = pixelsLength(_width, _height);
     _yPixelsLength = _width * _height;
-    _uPixelsLength = static_cast<size_t>((_width * _height * 1.0 / 4.0)); 
+    _uPixelsLength = static_cast<size_t>((_width * _height * 0.25)); 
     _vPixelsLength = _uPixelsLength;
     _yPixels = _pixels;
     _uPixels = _pixels  + _yPixelsLength;

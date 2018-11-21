@@ -58,7 +58,7 @@ uint32_t BitmapImage::widthBytes() const
 
 uint32_t BitmapImage::widthBytes(int width) const
 {
-    return (width % 4) + width * 3;
+    return (width % 4) + (width << 1) + width;
 }
 
 uint32_t BitmapImage::pixelsLength() const
@@ -71,15 +71,15 @@ uint32_t BitmapImage::pixelsLength(int width, int height) const
     return widthBytes(width) * height;
 }
 
-Vec3u BitmapImage::at(int x,int y) const
+inline Vec3u BitmapImage::at(int x,int y) const
 {
-    uint8_t* p = (_pixels + (_height - 1 - y) * _widthBytes + x * 3);
+    uint8_t* p = (_pixels + (_height - 1 - y) * _widthBytes + (x << 1) + x);
     return Vec3u(p[2] , p[1], p[0]);
 }
 
-Vec3u& BitmapImage::at(int x,int y)
+inline Vec3u& BitmapImage::at(int x,int y)
 {
-    _refVec3u = reinterpret_cast<Vec3u*>((_pixels + (_height - 1 - y) * _widthBytes + x * 3));
+    _refVec3u = reinterpret_cast<Vec3u*>((_pixels + (_height - 1 - y) * _widthBytes + (x << 1) + x));
     return *_refVec3u;
 }
 

@@ -2,6 +2,8 @@ CPP = g++
 CPPFLAGS = -std=c++14 -O3 -Wall -Werror 
 OBJ = ../obj
 BIN = ../bin
+.PHONY: dirs clean
+all: dirs ${BIN}/main
 ${BIN}/main: ${OBJ}/main.o ${OBJ}/image.o ${OBJ}/bitmap.o ${OBJ}/imageloader.o ${OBJ}/imagewritter.o ${OBJ}/yuv.o
 	${CPP} ${CPPFLAGS} -o ${BIN}/main ${OBJ}/main.o ${OBJ}/image.o ${OBJ}/bitmap.o ${OBJ}/imageloader.o ${OBJ}/imagewritter.o ${OBJ}/yuv.o
 ${OBJ}/main.o: main.cpp
@@ -18,3 +20,7 @@ ${OBJ}/yuv.o: yuv.cpp
 	${CPP} ${CPPFLAGS} -o ${OBJ}/yuv.o -c yuv.cpp
 clean:
 	rm ${BIN}/main ${OBJ}/*.o
+dirs:
+	mkdir -p ${OBJ}
+	mkdir -p ${BIN}
+
